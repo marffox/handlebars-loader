@@ -149,11 +149,21 @@ module.exports = function(source) {
 
     // Precompile template
     var template = '';
+    var queryKnownHelpersOnly = true;
 
+    //Evaluates wether the query KnownHelpersOnly has been set or not
+    if(firstCompile) {
+      queryKnownHelpersOnly = false
+    } else {
+        if(query.knownHelpersOnly == false) {
+          queryKnownHelpersOnly = false
+        }
+    };
+    
     try {
       if (source) {
         template = hb.precompile(source, {
-          knownHelpersOnly: firstCompile ? false : true,
+          knownHelpersOnly: queryKnownHelpersOnly,
           knownHelpers: knownHelpers,
           preventIndent: query.preventIndent
         });
